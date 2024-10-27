@@ -2,7 +2,7 @@ resource "yandex_compute_disk" "boot-disk-1" {
   name     = "boot-disk-1"
   type     = "network-hdd"
   zone     = "ru-central1-a"
-  size     = "20"
+  size     = "10"
   image_id = "fd83b9pkhhr6m7tegqjm"
   folder_id = "b1ghj3gm3a5ud4i8h84n"
 }
