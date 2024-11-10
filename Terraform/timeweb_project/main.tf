@@ -15,7 +15,7 @@ resource "twc_server" "my-timeweb-server" {
 
   configuration {
     configurator_id = data.twc_configurator.configurator.id
-    disk = 1024 * 10
+    disk = 15360
     cpu = 1
     ram = 1024 * 1
   }
