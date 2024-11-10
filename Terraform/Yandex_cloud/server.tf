@@ -1,5 +1,5 @@
-resource "yandex_compute_disk" "boot-disk-2" {
-  name     = "boot-disk-2"
+resource "yandex_compute_disk" "boot-disk-1" {
+  name     = "boot-disk-1"
   type     = "network-hdd"
   zone     = "ru-central1-a"
   size     = "10"
@@ -7,7 +7,7 @@ resource "yandex_compute_disk" "boot-disk-2" {
   folder_id = "b1ghj3gm3a5ud4i8h84n"
 }
 
-resource "yandex_compute_instance" "vm-2" {
+resource "yandex_compute_instance" "vm-1" {
   name = "server1"
   folder_id = "b1ghj3gm3a5ud4i8h84n"
   
@@ -17,7 +17,7 @@ resource "yandex_compute_instance" "vm-2" {
   }
 
   boot_disk {
-    disk_id = yandex_compute_disk.boot-disk-2.id
+    disk_id = yandex_compute_disk.boot-disk-1.id
   }
 
   network_interface {
@@ -25,7 +25,12 @@ resource "yandex_compute_instance" "vm-2" {
     nat       = true
   }
 
+  scheduling_policy {
+    preemptible = true
+  }
+
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/yacloud.pub")}"
+    user-data = "#cloud-config\nusers:\n  - name: lurk\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("/home/lurk/.ssh/yacloud.pub")}"
   }
 }
