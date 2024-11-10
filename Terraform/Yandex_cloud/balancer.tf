@@ -3,7 +3,7 @@ resource "yandex_lb_network_load_balancer" "foo" {
 
   listener {
     name = "my-listener"
-    port = 8080
+    port = 80
     external_address_spec {
       ip_version = "ipv4"
     }
@@ -14,8 +14,10 @@ resource "yandex_lb_network_load_balancer" "foo" {
 
     healthcheck {
       name = "http"
+      unhealthy_threshold = 5
+      healthy_threshold   = 5
       http_options {
-        port = 8080
+        port = 80
         path = "/ping"
       }
     }
@@ -28,6 +30,6 @@ resource "yandex_lb_target_group" "target-group-1" {
 
   target {
     subnet_id = yandex_vpc_subnet.subnet-1.id
-    address   = yandex_compute_instance.vm-2.network_interface.0.ip_address
+    address   = yandex_compute_instance.vm-1.network_interface.0.ip_address
   }
 }
