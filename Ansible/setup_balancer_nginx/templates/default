@@ -1,7 +1,9 @@
 
 http {
     upstream app{
-       "{{web_server}}";
+      least_conn;
+      ip_hash;
+      "{{web_server}}";
     }
  
     server {
