@@ -1,8 +1,8 @@
 resource "yandex_lb_network_load_balancer" "foo" {
-  name = "my-network-load-balancer"
+  name = "network-load-balancer-yandex"
 
   listener {
-    name = "my-listener"
+    name = "http-listener"
     port = 80
     external_address_spec {
       ip_version = "ipv4"
@@ -30,6 +30,6 @@ resource "yandex_lb_target_group" "target-group-1" {
 
   target {
     subnet_id = yandex_vpc_subnet.subnet-1.id
-    address   = yandex_compute_instance.vm-1.network_interface.0.ip_address
+    address   = yandex_compute_instance.vm-2.network_interface.0.ip_address
   }
 }
