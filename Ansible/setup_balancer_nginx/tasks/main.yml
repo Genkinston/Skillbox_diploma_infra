@@ -1,14 +1,24 @@
-- name: Ping host
-  ansible.builtin.ping:
-
-- name: Update apt cache (update apt repsitory index)
+- name: Update apt cache
   ansible.builtin.apt:
     update_cache: true
+
 - name: Upgrade apt
   ansible.builtin.apt:
     upgrade: true
 
-- name: Install base package
+- name: Install base packages
   ansible.builtin.package:
     pkg: "{{ base_packages }}"
     state: present
+
+- name: Make config from template
+  ansible.builtin.template:
+    src: default
+    dest: "/etc/nginx/sites-available/"
+    mode: "0666"
+
+- name: Restart Nginx service
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: nginx
