@@ -12,7 +12,7 @@ resource "yandex_vpc_subnet" "subnet-1" {
 }
 
 resource "yandex_dns_zone" "zone1" {
-  name        = "my_private_zone"
+  name        = "domain-bucket-zone-1"
   description = "desc"
 
   labels = {
@@ -24,9 +24,17 @@ resource "yandex_dns_zone" "zone1" {
   private_networks = [yandex_vpc_network.default.id]
 }
 
-resource "yandex_dns_recordset" "domain_bucket" {
+resource "yandex_dns_recordset" "server" {
   zone_id = yandex_dns_zone.zone1.id
-  name    = "genkinstonlurk.ru.website.yandexcloud.net."
+  name    = "server1"
+  type    = "A"
+  ttl     = 200
+  data    = ["192.168.1.12"]
+}
+
+resource "yandex_dns_recordset" "balancer-nginx" {
+  zone_id = yandex_dns_zone.zone1.id
+  name    = "balancernginx"
   type    = "A"
   ttl     = 200
   data    = ["192.168.1.11"]
