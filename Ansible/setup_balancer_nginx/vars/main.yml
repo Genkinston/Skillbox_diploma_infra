@@ -1,2 +1,4 @@
 ---
 # vars file for setup_balancer_nginx
+base_packages:
+  - nginx
