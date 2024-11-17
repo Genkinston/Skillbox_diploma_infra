@@ -10,6 +10,7 @@ resource "yandex_compute_disk" "boot-disk-1" {
 resource "yandex_compute_instance" "vm-1" {
   name = "server1"
   folder_id = "b1ghj3gm3a5ud4i8h84n"
+  hostname = "server1"
   
   resources {
     cores  = 2
