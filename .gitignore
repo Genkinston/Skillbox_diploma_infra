@@ -435,3 +435,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 *.hcl
+/.vscode
