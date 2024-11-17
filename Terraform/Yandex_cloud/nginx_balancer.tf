@@ -10,7 +10,7 @@ resource "yandex_compute_disk" "boot-disk-2" {
 resource "yandex_compute_instance" "vm-2" {
   name = "balancernginx"
   folder_id = "b1ghj3gm3a5ud4i8h84n"
-  hostname = "balancernginx"
+  hostname = "balancernginx.genkinstonlurk.ru"
   
   resources {
     cores  = 2
@@ -24,6 +24,7 @@ resource "yandex_compute_instance" "vm-2" {
   network_interface {
     subnet_id = yandex_vpc_subnet.subnet-1.id
     nat       = true
+    security_group_ids = ["${yandex_vpc_security_group.web_server_sg1.id}"]
   }
 
   scheduling_policy {
