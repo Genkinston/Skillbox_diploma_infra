@@ -1,0 +1,37 @@
+resource "yandex_compute_disk" "boot-disk-2" {
+  name     = "boot-disk-2"
+  type     = "network-hdd"
+  zone     = "ru-central1-a"
+  size     = "10"
+  image_id = "fd83b9pkhhr6m7tegqjm"
+  folder_id = "b1ghj3gm3a5ud4i8h84n"
+}
+
+resource "yandex_compute_instance" "vm-2" {
+  name = "balancernginx"
+  folder_id = "b1ghj3gm3a5ud4i8h84n"
+  hostname = "balancernginx"
+  
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    disk_id = yandex_compute_disk.boot-disk-2.id
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-1.id
+    nat       = true
+  }
+
+  scheduling_policy {
+    preemptible = true
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/yacloud.pub")}"
+    user-data = "#cloud-config\nusers:\n  - name: lurk\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("/home/lurk/.ssh/yacloud.pub")}"
+  }
+}
