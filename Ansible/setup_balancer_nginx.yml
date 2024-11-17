@@ -1,0 +1,5 @@
+- name: Setup balancer (playbook for setup env for nginx balancer)
+  hosts: balancer
+  become: true
+  roles:
+    - setup_balancer_nginx
