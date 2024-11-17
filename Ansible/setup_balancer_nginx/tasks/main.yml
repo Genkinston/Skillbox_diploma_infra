@@ -1,2 +1,14 @@
----
-# tasks file for setup_balancer_nginx
+- name: Ping host
+  ansible.builtin.ping:
+
+- name: Update apt cache (update apt repsitory index)
+  ansible.builtin.apt:
+    update_cache: true
+- name: Upgrade apt
+  ansible.builtin.apt:
+    upgrade: true
+
+- name: Install base package
+  ansible.builtin.package:
+    pkg: "{{ base_packages }}"
+    state: present
