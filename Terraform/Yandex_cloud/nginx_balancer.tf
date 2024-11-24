@@ -24,6 +24,7 @@ resource "yandex_compute_instance" "vm-2" {
   network_interface {
     subnet_id = yandex_vpc_subnet.subnet-1.id
     nat       = true
+    ip_address = "192.168.1.11"
     security_group_ids = ["${yandex_vpc_security_group.web_server_sg1.id}"]
   }
 
@@ -33,6 +34,6 @@ resource "yandex_compute_instance" "vm-2" {
 
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/yacloud.pub")}"
-    user-data = "#cloud-config\nusers:\n  - name: lurk\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("/home/lurk/.ssh/yacloud.pub")}"
+    user-data = "#cloud-config\nusers:\n  - name: ubuntu\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("/home/lurk/.ssh/yacloud.pub")}"
   }
 }
