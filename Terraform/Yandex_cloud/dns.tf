@@ -1,5 +1,5 @@
 resource "yandex_dns_zone" "zone1" {
-  name        = "genkinstonlurk.ru"
+  name        = "domain"
   description = "desc"
 
   labels = {
