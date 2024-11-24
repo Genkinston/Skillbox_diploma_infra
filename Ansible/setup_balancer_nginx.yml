@@ -1,4 +1,4 @@
-- name: Setup balancer (playbook for setup env for nginx balancer)
+- name: Setup balancer
   hosts: balancer
   become: true
   roles:
