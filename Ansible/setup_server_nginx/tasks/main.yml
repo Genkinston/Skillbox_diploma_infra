@@ -1,14 +1,11 @@
-- name: Ping host
-  ansible.builtin.ping:
-
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-- name: Upgrade apt
-  ansible.builtin.apt:
-    upgrade: true
-
-- name: Install base package
-  ansible.builtin.package:
-    pkg: "{{ base_packages }}"
+- name: Install Nginx
+  apt:
+    name: nginx
     state: present
+    update_cache: yes
+
+- name: Enable and start Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
