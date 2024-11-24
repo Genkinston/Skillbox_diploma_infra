@@ -1,24 +1,33 @@
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-
-- name: Upgrade apt
-  ansible.builtin.apt:
-    upgrade: true
-
-- name: Install base packages
-  ansible.builtin.package:
-    pkg: "{{ base_packages }}"
-    state: present
-
-- name: Make config from template
-  ansible.builtin.template:
-    src: default
-    dest: "/etc/nginx/sites-available/"
-    mode: "0666"
-
-- name: Restart Nginx service
-  ansible.builtin.systemd_service:
-    state: restarted
-    daemon_reload: true
+- name: Install Nginx
+  apt:
     name: nginx
+    state: present
+    update_cache: yes
+
+
+- name: Delete the Nginx html  
+  file:
+    path: "{{ project_path }}/html"
+    state: absent
+
+- name: Delete the Nginx config
+  file:
+    path:
+      - "{{ config_path }}/sites-enabled/default"
+      - "{{ config_path }}/sites-available/default"
+    state: absent
+
+
+- name: Copy Nginx configuration file
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable and start Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
