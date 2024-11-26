@@ -1,4 +1,4 @@
-resource "yandex_compute_disk" "boot-disk-1" {
+resource "yandex_compute_disk" "boot-disk-web_server" {
   name     = "boot-disk-1"
   type     = "network-hdd"
   zone     = "ru-central1-a"
@@ -7,7 +7,7 @@ resource "yandex_compute_disk" "boot-disk-1" {
   folder_id = "b1ghj3gm3a5ud4i8h84n"
 }
 
-resource "yandex_compute_instance" "vm-1" {
+resource "yandex_compute_instance" "web_server" {
   name = "server1"
   folder_id = "b1ghj3gm3a5ud4i8h84n"
   hostname = "server1.genkinstonlurk.ru"
@@ -18,7 +18,7 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   boot_disk {
-    disk_id = yandex_compute_disk.boot-disk-1.id
+    disk_id = yandex_compute_disk.boot-disk-web_server.id
   }
 
   network_interface {
