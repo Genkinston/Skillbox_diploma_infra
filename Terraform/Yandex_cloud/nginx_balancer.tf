@@ -1,5 +1,5 @@
-resource "yandex_compute_disk" "boot-disk-2" {
-  name     = "boot-disk-2"
+resource "yandex_compute_disk" "boot-disk-vm-balancernginx" {
+  name     = "boot-disk-vm-balancernginx"
   type     = "network-hdd"
   zone     = "ru-central1-a"
   size     = "10"
@@ -7,7 +7,7 @@ resource "yandex_compute_disk" "boot-disk-2" {
   folder_id = "b1ghj3gm3a5ud4i8h84n"
 }
 
-resource "yandex_compute_instance" "vm-2" {
+resource "yandex_compute_instance" "vm-balancernginx" {
   name = "balancernginx"
   folder_id = "b1ghj3gm3a5ud4i8h84n"
   hostname = "balancernginx.genkinstonlurk.ru"
@@ -18,7 +18,7 @@ resource "yandex_compute_instance" "vm-2" {
   }
 
   boot_disk {
-    disk_id = yandex_compute_disk.boot-disk-2.id
+    disk_id = yandex_compute_disk.boot-disk-vm-balancernginx.id
   }
 
   network_interface {
