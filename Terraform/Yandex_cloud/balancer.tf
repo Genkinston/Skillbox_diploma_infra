@@ -30,6 +30,6 @@ resource "yandex_lb_target_group" "target-group-1" {
 
   target {
     subnet_id = yandex_vpc_subnet.subnet-1.id
-    address   = yandex_compute_instance.vm-2.network_interface.0.ip_address
+    address   = yandex_compute_instance.vm-balancernginx.network_interface.0.ip_address
   }
 }
