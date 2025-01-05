@@ -17,7 +17,7 @@ data "openstack_networking_network_v2" "external_network_1" {
   external = true
 
   depends_on = [
-    selectel_vpc_project_v2.project_1,
+    selectel_vpc_project_v2.project_genkinstonlurk,
     selectel_iam_serviceuser_v1.serviceuser_1
   ]
 }
@@ -56,7 +56,7 @@ resource "openstack_networking_network_v2" "network_1" {
   admin_state_up = "true"
 
   depends_on = [
-    selectel_vpc_project_v2.project_1,
+    selectel_vpc_project_v2.project_genkinstonlurk,
     selectel_iam_serviceuser_v1.serviceuser_1
   ]
 }
