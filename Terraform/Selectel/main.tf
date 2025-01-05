@@ -16,14 +16,39 @@ provider "selectel" {
   domain_name = var.selectel_account
   username    = var.service_admin_username
   password    = var.service_admin_password
-  auth_region = "pool"
+  auth_region = "ru-2"
   auth_url    = "https://cloud.api.selcloud.ru/identity/v3/"
 }
 
 #Создаёт проект
-resource "selectel_vpc_project_v2" "project_1" {
-  name = "Skillbox_devops_project_1"
+resource "selectel_vpc_project_v2" "project_genkinstonlurk" {
+  name = "project_1"
   custom_url = "geninstonlurk.selvpc.ru"
+
+  quotas {
+    resource_name = "compute_cores"
+    resource_quotas {
+      region = "ru-2"
+      zone   = "ru-2a"
+      value  = 12
+    }
+  }
+  quotas {
+    resource_name = "compute_ram"
+    resource_quotas {
+      region = "ru-2"
+      zone   = "ru-2a"
+      value  = 20480
+    }
+  }
+  quotas {
+    resource_name = "volume_gigabytes_fast"
+    resource_quotas {
+      region = "ru-2"
+      zone   = "ru-2a"
+      value  = 100
+    }
+  }
 }
 
 #Создаёт сервисного пользователя проекта
@@ -33,7 +58,7 @@ resource "selectel_iam_serviceuser_v1" "serviceuser_1" {
   role {
     role_name  = "member"
     scope      = "project"
-    project_id = selectel_vpc_project_v2.project_1.id
+    project_id = selectel_vpc_project_v2.project_genkinstonlurk.id
   }
 }
 
@@ -41,9 +66,9 @@ resource "selectel_iam_serviceuser_v1" "serviceuser_1" {
 provider "openstack" {
   auth_url    = "https://cloud.api.selcloud.ru/identity/v3"
   domain_name = var.selectel_account
-  tenant_id   = selectel_vpc_project_v2.project_1.id
+  tenant_id   = selectel_vpc_project_v2.project_genkinstonlurk.id
   user_name   = selectel_iam_serviceuser_v1.serviceuser_1.name
   password    = selectel_iam_serviceuser_v1.serviceuser_1.password
-  region      = "ru-9"
+  region      = "ru-2"
 }
 
