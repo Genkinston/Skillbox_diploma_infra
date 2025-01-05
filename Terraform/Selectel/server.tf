@@ -21,7 +21,7 @@ data "openstack_images_image_v2" "image_1" {
   disk_format      = "qcow2"
 
   depends_on = [
-    selectel_vpc_project_v2.project_1,
+    selectel_vpc_project_v2.project_genkinstonlurk,
     selectel_iam_serviceuser_v1.serviceuser_1
   ]
 }
