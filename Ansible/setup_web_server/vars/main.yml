@@ -1,0 +1,4 @@
+scripts:
+- /root/project/Final_project/run-tests.sh
+- /root/project/Final_project/scripts/test_in_docker.sh
+project_path: /root/project

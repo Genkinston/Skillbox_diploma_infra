@@ -1,4 +1,0 @@
----
-# vars file for setup_server_nginx
-base_packages:
-  - nginx

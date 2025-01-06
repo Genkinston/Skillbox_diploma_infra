@@ -1,7 +1,7 @@
 #Получение образа
 
 data "openstack_images_image_v2" "image_1" {
-  name        = "Ubuntu 24.04 LTS 64-bit"
+  name        = "Ubuntu 22.04 LTS 64-bit"
   most_recent = true
   visibility  = "public"
 
@@ -38,6 +38,10 @@ resource "openstack_compute_instance_v2" "server_1" {
     port = openstack_networking_port_v2.port_1.id
     #name = openstack_networking_network_v2.network_1.name
     #fixed_ip_v4 = "192.168.200.4"
+  }
+
+  network {
+    port = openstack_networking_port_v2.port_ssh.id
   }
 
   lifecycle {

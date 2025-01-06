@@ -1,6 +1,0 @@
----
-# vars file for setup_balancer_nginx
-web_server: server 192.168.1.12
-domain: genkinstonlurk.ru
-project_path: /var/www
-config_path: /etc/nginx

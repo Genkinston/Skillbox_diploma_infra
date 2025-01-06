@@ -1,5 +1,0 @@
-- name: Setup balancer
-  hosts: balancer
-  become: true
-  roles:
-    - setup_balancer_nginx

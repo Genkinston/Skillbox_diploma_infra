@@ -2,4 +2,4 @@
   hosts: server
   become: true
   roles:
-    - setup_server_nginx
+    - setup_web_server

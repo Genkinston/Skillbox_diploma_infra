@@ -1,0 +1,39 @@
+- name: Install packages
+  ansible.builtin.apt:
+    name: 
+      - git
+      - unzip
+      - dos2unix
+    state: present
+    update_cache: yes
+
+- name: Install Docker (script)
+  script:
+    cmd: scripts/docker.sh
+
+- name: Create project folder
+  ansible.builtin.file:
+    path: 
+      - "{{ project_path }}"
+    state: directory
+
+- name: Unpack a ZIP project archive
+  ansible.builtin.unarchive:
+    src: Final_project.zip
+    dest: 
+      - "{{ project_path }}"
+    copy: yes
+
+- name: Set executable rules
+  ansible.builtin.file:
+    path: 
+      - "{{ scripts }}"
+    mode: u+x
+
+- name: Fix autor bad OS choice
+  ansible.builtin.shell:
+    cmd: "dos2unix {{ project_path }}/Final_project/*"
+
+- name: Test before build project
+  ansible.builtin.shell:
+    cmd: "cd {{ project_path }}/Final_project && bash ./run-tests.sh"
