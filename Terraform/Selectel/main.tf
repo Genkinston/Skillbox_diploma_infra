@@ -16,7 +16,7 @@ provider "selectel" {
   domain_name = var.selectel_account
   username    = var.service_admin_username
   password    = var.service_admin_password
-  auth_region = "ru-2"
+  auth_region = "ru-9"
   auth_url    = "https://cloud.api.selcloud.ru/identity/v3/"
 }
 
@@ -24,31 +24,6 @@ provider "selectel" {
 resource "selectel_vpc_project_v2" "project_genkinstonlurk" {
   name = "project_1"
   custom_url = "geninstonlurk.selvpc.ru"
-
-  quotas {
-    resource_name = "compute_cores"
-    resource_quotas {
-      region = "ru-2"
-      zone   = "ru-2a"
-      value  = 12
-    }
-  }
-  quotas {
-    resource_name = "compute_ram"
-    resource_quotas {
-      region = "ru-2"
-      zone   = "ru-2a"
-      value  = 20480
-    }
-  }
-  quotas {
-    resource_name = "volume_gigabytes_fast"
-    resource_quotas {
-      region = "ru-2"
-      zone   = "ru-2a"
-      value  = 100
-    }
-  }
 }
 
 #Создаёт сервисного пользователя проекта
@@ -69,6 +44,6 @@ provider "openstack" {
   tenant_id   = selectel_vpc_project_v2.project_genkinstonlurk.id
   user_name   = selectel_iam_serviceuser_v1.serviceuser_1.name
   password    = selectel_iam_serviceuser_v1.serviceuser_1.password
-  region      = "ru-2"
+  region      = "ru-9"
 }
 
