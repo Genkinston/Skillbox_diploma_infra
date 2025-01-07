@@ -15,7 +15,7 @@ data "openstack_images_image_v2" "image_1" {
 
 resource "openstack_blockstorage_volume_v3" "volume_1" {
   name                 = "boot-volume-for-server"
-  size                 = "5"
+  size                 = "10"
   image_id             = data.openstack_images_image_v2.image_1.id
   volume_type          = "basic.ru-9a"
   availability_zone    = "ru-9a"
@@ -36,12 +36,6 @@ resource "openstack_compute_instance_v2" "server_1" {
 
   network {
     port = openstack_networking_port_v2.port_1.id
-    #name = openstack_networking_network_v2.network_1.name
-    #fixed_ip_v4 = "192.168.200.4"
-  }
-
-  network {
-    port = openstack_networking_port_v2.port_ssh.id
   }
 
   lifecycle {
