@@ -1,0 +1,5 @@
+- name: Setup project
+  hosts: server
+  become: true
+  roles:
+    - setup_project
