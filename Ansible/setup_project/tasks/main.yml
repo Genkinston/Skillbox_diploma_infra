@@ -1,0 +1,44 @@
+- name: Create ssh keys folder
+  ansible.builtin.file:
+    path: /root/.ssh
+    state: directory
+
+- name: Copy ssh key to target
+  ansible.builtin.copy:
+    src: /home/lurk/.ssh/skillbox_gitlab_cloning_key
+    dest: "/root/.ssh"
+    mode: "0600"
+
+- name: Create project folder
+  ansible.builtin.file:
+    path: "{{ project_path }}"
+    state: directory
+
+- name: Clone a repo
+  ansible.builtin.git:
+    repo: "git@gitlab.skillbox.ru:{{ gitlab_user }}/{{ project_name }}.git"
+    version: master
+    key_file: "/root/.ssh/skillbox_gitlab_cloning_key"
+    force: yes
+    dest: "{{ project_path }}"
+
+- name: Delete the ssh key from target
+  file:
+    path: "/root/.ssh/skillbox_gitlab_cloning_key"
+    state: absent
+
+- name: Set executable rights (script)
+  ansible.builtin.script:
+    cmd: scripts/set_rights.sh
+
+- name: Fix author bad os choice
+  ansible.builtin.shell:
+    cmd: "dos2unix {{ project_path }}/{{ project_folder }}/*"
+
+- name: Test before build project
+  ansible.builtin.shell:
+    cmd: "cd {{ project_path }}/{{ project_folder }} && bash ./run-tests.sh"
+
+- name: Build project
+  ansible.builtin.shell:
+    cmd: "cd {{ project_path }}/{{ project_folder }} && docker build . -t skillbox/app"
