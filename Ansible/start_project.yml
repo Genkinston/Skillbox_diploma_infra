@@ -1,0 +1,5 @@
+- name: Setup web server
+  hosts: server
+  become: true
+  roles:
+    - start_project
