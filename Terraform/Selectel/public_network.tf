@@ -32,25 +32,6 @@ resource "openstack_networking_port_v2" "port_1" {
   }
 }
 
-#Создание ssh порта облачного сервера
-
-resource "openstack_networking_port_v2" "port_ssh" {
-  name       = "ssh_port"
-  network_id = openstack_networking_network_v2.network_1.id
-  admin_state_up = true # вкл/выкл порта при необходимости работ
-
-  fixed_ip {
-    subnet_id = openstack_networking_subnet_v2.subnet_1.id
-  }
-}
-
-#Создание публичного ip-адреса ssh
-
-resource "openstack_networking_floatingip_v2" "floatingip_ssh" {
-  pool = "external-network"
-  port_id = openstack_networking_port_v2.port_ssh.id
-}
-
 #Создание публичного ip-адреса с подключением к балансировщику
 
 resource "openstack_networking_floatingip_v2" "floatingip_1" {
@@ -62,10 +43,4 @@ resource "openstack_networking_floatingip_v2" "floatingip_1" {
 
 output "public_ip_address_lb" {
   value = openstack_networking_floatingip_v2.floatingip_1.address
-}
-
-#Получить IP-адрес ssh порта сервера
-
-output "public_ip_address_ssh" {
-  value = openstack_networking_floatingip_v2.floatingip_ssh.address
 }
