@@ -1,0 +1,3 @@
+- name: Start web server from docker
+  ansible.builtin.shell:
+    cmd: "cd {{ project_path }}/{{ project_folder }} && docker run -p 8080:8080 -d skillbox/app"
