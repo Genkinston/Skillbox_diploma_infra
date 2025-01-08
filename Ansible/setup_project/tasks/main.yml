@@ -5,7 +5,7 @@
 
 - name: Copy ssh key to target
   ansible.builtin.copy:
-    src: /home/lurk/.ssh/skillbox_gitlab_cloning_key
+    src: "{{ key_path }}/{{ git_key }}"
     dest: "/root/.ssh"
     mode: "0600"
 
@@ -18,13 +18,13 @@
   ansible.builtin.git:
     repo: "git@gitlab.skillbox.ru:{{ gitlab_user }}/{{ project_name }}.git"
     version: master
-    key_file: "/root/.ssh/skillbox_gitlab_cloning_key"
+    key_file: "/root/.ssh/{{ git_key }}"
     force: yes
     dest: "{{ project_path }}"
 
 - name: Delete the ssh key from target
   file:
-    path: "/root/.ssh/skillbox_gitlab_cloning_key"
+    path: "/root/.ssh/{{ git_key }}"
     state: absent
 
 - name: Set executable rights (script)
